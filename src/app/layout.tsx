@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/config/site-config";
+import QueryProviders from "@/providers/query-provider";
 
 import "./globals.css";
 
@@ -17,8 +18,54 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Basic Next.js Starter",
-  description: "Basic Next.js Starter with Shadcn UI initiated",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `Home ❤️ ${siteConfig.title}`,
+    template: `%s ❤️ ${siteConfig.title}`,
+  },
+  keywords: [
+    "Yayasan Jantung Indonesia",
+    "Klub Jantung Sehat",
+    "Klub Jantung Sehat Remaja",
+    "Klub Jantung Remaja",
+    "YJI",
+    "KJS",
+    "KJSR",
+    "KJR",
+    "SEHAT",
+    "yayasan jantung indonesia",
+    "klub jantung sehat",
+    "klub jantung sehat remaja",
+    "klub rantung remaja",
+    "sehat",
+    "jantung sehat",
+    "yji",
+    "kjs",
+    "kjsr",
+    "kjr",
+    "sehat",
+    "remaja",
+  ],
+  description: siteConfig.description,
+  robots: { index: true, follow: true },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: siteConfig.title,
+    images: [`${siteConfig.url}/images/og.jpg`],
+    type: "website",
+    locale: "id_ID",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/images/og.jpg`],
+  },
 };
 
 export default function RootLayout({
@@ -29,21 +76,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jakartaSans.variable} ${geistMono.variable} h-full w-full antialiased`}
+        className={`${jakartaSans.variable} ${geistMono.variable} bg-white-kjsr selection:bg-primary selection:text-white-kjsr h-full w-full font-sans antialiased`}
       >
-        <div className="flex h-screen w-screen flex-col justify-between">
-          <main className="container flex-grow">{children}</main>
-          <footer className="flex h-14 items-center justify-center border-t font-sans">
-            &copy; 2025 By{" "}
-            <span className="ml-1">
-              <Link href={"https://ahmdhndr.web.id/"} target="_blank">
-                <Button variant={"link"} className="p-0">
-                  Achmad Hendarsyah
-                </Button>
-              </Link>
-            </span>
-          </footer>
-        </div>
+        <QueryProviders>{children}</QueryProviders>
+        <Toaster
+          richColors
+          closeButton
+          theme="light"
+          toastOptions={{
+            classNames: {
+              closeButton: "!-right-5 !w-7 !h-7 justify-self-end",
+            },
+          }}
+        />
       </body>
     </html>
   );
