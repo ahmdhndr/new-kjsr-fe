@@ -39,7 +39,7 @@ const useLogin = () => {
       callbackUrl,
     });
 
-    if (result?.error) {
+    if (!result?.ok) {
       throw new AxiosError("Kredensial tidak valid");
     }
   };
