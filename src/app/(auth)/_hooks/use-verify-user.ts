@@ -3,8 +3,10 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
+import { capitalizeFirstLetter } from "@/lib/capitalize-first-letter";
 import { errorToast } from "@/lib/error-toast";
 
 import { verifyUserSchema } from "../_schemas/verify-user.schema";
@@ -25,6 +27,25 @@ const useVerifyUser = (email: string) => {
     return result;
   };
 
+  const resendOTPFn = async (payload: { email: string }) => {
+    const result = await authServices.requestOtp(payload.email, "resend-otp");
+    return result;
+  };
+
+  const { mutate: resendOTPMutate, isPending: isPendingResendOTP } =
+    useMutation({
+      mutationFn: resendOTPFn,
+      onSuccess: (response) => {
+        const { data } = response;
+        toast.success(capitalizeFirstLetter(data.status), {
+          description: data.message,
+        });
+      },
+      onError: (error) => {
+        errorToast(error);
+      },
+    });
+
   const { mutate: verifyUserMutate, isPending: isPendingVerifyUser } =
     useMutation({
       mutationFn: verifyUserFn,
@@ -44,11 +65,8 @@ const useVerifyUser = (email: string) => {
     form,
     onSubmit,
     isPendingVerifyUser,
-    // setOtp: (otp: string) => {
-    //   form.setValue("otp", otp);
-    //   const emailVal = form.getValues("email");
-    //   if (otp.length === 6 && emailVal) onSubmit({ email: emailVal, otp });
-    // },
+    resendOTPMutate,
+    isPendingResendOTP,
   };
 };
 

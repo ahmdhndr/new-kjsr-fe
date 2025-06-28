@@ -29,8 +29,8 @@ export default function SuccessPage() {
 
       <p className="font-light text-balance">
         Redirecting you to sign in page in{" "}
-        <span className="font-semibold">{countdown}</span> Click the button
-        below to redirect manually
+        <span className="font-semibold">{countdown}</span> <br /> Click the
+        button below to redirect manually
       </p>
 
       <Button
