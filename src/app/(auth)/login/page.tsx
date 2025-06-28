@@ -1,11 +1,9 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "next-auth";
 
-import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 
 import { LoginForm } from "../_components/login-form";
@@ -31,19 +29,8 @@ export default async function LoginPage() {
           height={100}
         />
       </div>
-      <LoginForm />
 
-      <p className="text-muted-foreground mt-4 text-left">
-        Belum memiliki akun?&nbsp;
-        <Button variant={"link"} className="p-0">
-          <Link
-            href={"/register"}
-            className="text-primary flex justify-center gap-1"
-          >
-            Daftar
-          </Link>
-        </Button>
-      </p>
+      <LoginForm />
     </div>
   );
 }

@@ -8,7 +8,8 @@ import { z } from "zod";
 
 import { errorToast } from "@/lib/error-toast";
 
-import { registerSchema } from "../_schemas/register.schema";
+import { refineRegisterSchema } from "../_schemas/register.schema";
+// import { refineRegisterSchema } from "../_schemas/register.schema";
 import { authServices } from "../_services/auth.service";
 import { IRegister } from "../_types/auth";
 
@@ -30,8 +31,8 @@ const useRegister = () => {
     });
   };
 
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<z.infer<typeof refineRegisterSchema>>({
+    resolver: zodResolver(refineRegisterSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -59,7 +60,7 @@ const useRegister = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) =>
+  const onSubmit = (values: z.infer<typeof refineRegisterSchema>) =>
     registerMutate(values);
 
   return {

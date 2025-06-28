@@ -23,7 +23,13 @@ import useVerifyUser from "../../_hooks/use-verify-user";
 export default function VerifyPage() {
   const searchParams = useSearchParams();
   const decodedEmail = atob(searchParams.get("e") || "");
-  const { form, onSubmit, isPendingVerifyUser } = useVerifyUser(decodedEmail);
+  const {
+    form,
+    onSubmit,
+    isPendingVerifyUser,
+    resendOTPMutate,
+    isPendingResendOTP,
+  } = useVerifyUser(decodedEmail);
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center space-y-5 text-center">
@@ -81,6 +87,8 @@ export default function VerifyPage() {
         <Button
           variant={"link"}
           className="h-full cursor-pointer p-0 text-inherit underline"
+          onClick={() => resendOTPMutate({ email: decodedEmail })}
+          disabled={isPendingResendOTP}
         >
           <span className="font-semibold">Resend</span>
         </Button>

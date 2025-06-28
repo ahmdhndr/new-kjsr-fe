@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -50,7 +52,18 @@ export function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-primary">Password</FormLabel>
+                  <FormLabel className="text-primary flex items-center justify-between">
+                    Password
+                    <span>
+                      <Button
+                        asChild
+                        variant={"link"}
+                        className="h-auto cursor-pointer p-0 underline"
+                      >
+                        <Link href={"/forgot-password"}>Lupa password?</Link>
+                      </Button>
+                    </span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type={isVisible ? "text" : "password"}
@@ -73,7 +86,7 @@ export function LoginForm() {
             <Button
               type="submit"
               variant={"default"}
-              className="w-full"
+              className="w-full cursor-pointer"
               disabled={isPendingLogin}
             >
               {isPendingLogin ? <Loader2 className="animate-spin" /> : "Masuk"}
@@ -81,6 +94,17 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
+      <p className="text-muted-foreground text-center">
+        Belum memiliki akun?&nbsp;
+        <Button variant={"link"} className="p-0">
+          <Link
+            href={"/register"}
+            className="text-primary flex justify-center gap-1"
+          >
+            Daftar
+          </Link>
+        </Button>
+      </p>
     </Card>
   );
 }
