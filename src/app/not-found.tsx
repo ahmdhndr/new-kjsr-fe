@@ -19,7 +19,7 @@ export default function NotFound() {
           entered the wrong URL or the page you are looking for has changed.
         </p>
         <Link href={"/"}>
-          <Button className="my-4 cursor-pointer">Take me home</Button>
+          <Button className="my-4">Take me home</Button>
         </Link>
       </div>
     </div>

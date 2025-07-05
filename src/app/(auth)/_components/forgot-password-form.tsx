@@ -61,7 +61,7 @@ export default function ForgotPasswordForm() {
             <Button
               type="submit"
               variant={"default"}
-              className="w-full cursor-pointer"
+              className="w-full"
               disabled={isPendingForgotPassword}
             >
               {isPendingForgotPassword ? (

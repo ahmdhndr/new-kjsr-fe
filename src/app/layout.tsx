@@ -78,7 +78,9 @@ export default function RootLayout({
       <body
         className={`${jakartaSans.variable} ${geistMono.variable} bg-white-kjsr selection:bg-primary selection:text-white-kjsr h-full w-full font-sans antialiased`}
       >
-        <QueryProviders>{children}</QueryProviders>
+        <div className="flex min-h-screen flex-col">
+          <QueryProviders>{children}</QueryProviders>
+        </div>
         <Toaster
           richColors
           closeButton

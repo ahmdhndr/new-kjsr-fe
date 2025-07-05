@@ -86,7 +86,7 @@ export default function VerifyClientPage() {
         Didn&apos;t receive the code?{" "}
         <Button
           variant={"link"}
-          className="h-full cursor-pointer p-0 text-inherit underline"
+          className="h-full p-0 text-inherit underline"
           onClick={() => resendOTPMutate({ email: decodedEmail })}
           disabled={isPendingResendOTP}
         >
@@ -97,7 +97,6 @@ export default function VerifyClientPage() {
         type="submit"
         form="form-verify-user"
         disabled={isPendingVerifyUser}
-        className="cursor-pointer"
       >
         {isPendingVerifyUser ? "Verifying..." : "Verify email"}
       </Button>

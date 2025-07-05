@@ -27,7 +27,7 @@ export default function RegisterPage() {
               fill
               sizes="(max-width: 768px) 100vw"
               priority
-              src={"/sky-kjsr-illustration.jpg"}
+              src={"/bg-sky-kjsr.svg"}
               alt="KJSR Illustration"
               className="object-cover object-bottom"
             />

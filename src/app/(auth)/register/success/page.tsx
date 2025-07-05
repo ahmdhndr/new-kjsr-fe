@@ -33,10 +33,7 @@ export default function SuccessPage() {
         button below to redirect manually
       </p>
 
-      <Button
-        variant={"link"}
-        className="h-full cursor-pointer p-0 text-inherit underline"
-      >
+      <Button variant={"link"} className="h-full p-0 text-inherit underline">
         <Link href={"/login"}>
           <span className="flex items-center gap-1 font-semibold">
             Go to sign in page <ArrowRight />

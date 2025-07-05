@@ -58,7 +58,7 @@ export function LoginForm() {
                       <Button
                         asChild
                         variant={"link"}
-                        className="h-auto cursor-pointer p-0 underline"
+                        className="h-auto p-0 underline"
                       >
                         <Link href={"/forgot-password"}>Lupa password?</Link>
                       </Button>
@@ -86,7 +86,7 @@ export function LoginForm() {
             <Button
               type="submit"
               variant={"default"}
-              className="w-full cursor-pointer"
+              className="w-full"
               disabled={isPendingLogin}
             >
               {isPendingLogin ? <Loader2 className="animate-spin" /> : "Masuk"}

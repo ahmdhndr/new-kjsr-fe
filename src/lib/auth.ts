@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -30,16 +31,21 @@ export const authOptions: AuthOptions = {
           password: string;
         };
 
-        const result = await authServices.login({ identifier, password });
-        const accessToken = result.data.data.token;
-        if (!accessToken) return null;
+        try {
+          const result = await authServices.login({ identifier, password });
 
-        const resultUser = await authServices.getProfile(accessToken);
-        const user = resultUser.data.data;
-        if (!user) return null;
+          const accessToken = result.data.data.token;
+          if (!accessToken) throw new AxiosError("Unauthorized");
 
-        user.accessToken = accessToken;
-        return user;
+          const resultUser = await authServices.getProfile(accessToken);
+          const user = resultUser.data.data;
+          if (!user) throw new AxiosError("Invalid credentials.");
+
+          // user.accessToken = accessToken;
+          return user;
+        } catch (_error) {
+          return null;
+        }
       },
     }),
   ],

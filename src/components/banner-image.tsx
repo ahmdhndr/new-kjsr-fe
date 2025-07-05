@@ -3,7 +3,7 @@ import Image from "next/image";
 import { blurDataURL } from "@/lib/blur-data-image-url";
 import { cn } from "@/lib/utils";
 
-export default function BannerImage(props: { className: string }) {
+export default function BannerImage(props: { className?: string }) {
   const { className } = props;
   return (
     <div className={cn("grid grid-cols-7 gap-1", className)}>
