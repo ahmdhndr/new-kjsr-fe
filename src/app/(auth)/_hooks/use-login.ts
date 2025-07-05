@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,6 +11,11 @@ import { errorToast } from "@/lib/error-toast";
 
 import { loginSchema } from "../_schemas/login.schema";
 import { ILogin } from "../_types/auth";
+
+const errorMessages: Record<string, string> = {
+  CredentialsSignin: "Kredensial tidak valid.",
+  default: "Terjadi kesalahan saat login.",
+};
 
 const useLogin = () => {
   const router = useRouter();
@@ -39,8 +43,12 @@ const useLogin = () => {
       callbackUrl,
     });
 
-    if (!result?.ok) {
-      throw new AxiosError("Kredensial tidak valid");
+    if (!result) {
+      throw new Error("Tidak bisa terhubung ke server");
+    }
+    if (result.error) {
+      const message = errorMessages[result.error] || errorMessages.default;
+      throw new Error(message);
     }
   };
 

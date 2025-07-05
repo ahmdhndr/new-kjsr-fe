@@ -53,10 +53,10 @@ const useRegister = () => {
     onError: (error) => {
       errorToast(error);
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       const encodedEmail = btoa(variables.email);
       router.push(`/register/verify?e=${encodedEmail}`);
-      // form.reset();
+      form.reset();
     },
   });
 
