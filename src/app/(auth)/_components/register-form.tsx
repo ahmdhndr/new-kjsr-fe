@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 
 import { ArrowRight, EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
@@ -18,14 +19,26 @@ import { Input } from "@/components/ui/input";
 
 import useRegister from "../_hooks/use-register";
 
-export function RegisterForm() {
+export function RegisterForm({
+  email,
+  token,
+}: {
+  email?: string;
+  token?: string;
+}) {
   const {
     visiblePassword,
     handleVisiblePassword,
     form,
     isPendingRegister,
     onSubmit,
-  } = useRegister();
+  } = useRegister(token);
+
+  useEffect(() => {
+    if (email) {
+      form.setValue("email", email);
+    }
+  }, [email, form]);
 
   return (
     <Form {...form}>
@@ -58,12 +71,17 @@ export function RegisterForm() {
         />
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-primary">Username</FormLabel>
+              <FormLabel className="text-primary">Email</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="johndoe" {...field} />
+                <Input
+                  type="email"
+                  placeholder="johndoe@kjsr.com"
+                  {...field}
+                  disabled={!!email}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,12 +89,12 @@ export function RegisterForm() {
         />
         <FormField
           control={form.control}
-          name="email"
+          name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-primary">Email</FormLabel>
+              <FormLabel className="text-primary">Username</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="johndoe@kjsr.com" {...field} />
+                <Input type="text" placeholder="johndoe" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

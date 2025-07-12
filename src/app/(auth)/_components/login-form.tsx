@@ -95,13 +95,12 @@ export function LoginForm() {
         </Form>
       </CardContent>
       <p className="text-muted-foreground text-center">
-        Belum memiliki akun?&nbsp;
         <Button variant={"link"} className="p-0">
           <Link
-            href={"/register"}
+            href={"/pre-register"}
             className="text-primary flex justify-center gap-1"
           >
-            Daftar
+            Pengajuan akun baru
           </Link>
         </Button>
       </p>

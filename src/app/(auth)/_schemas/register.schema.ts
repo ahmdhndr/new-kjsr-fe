@@ -11,6 +11,7 @@ export const registerSchema = z.object({
     .nonempty("Email tidak boleh kosong")
     .email("Harus berupa email yang valid"),
   ...passwordWithConfirmationSchema.shape,
+  token: z.string().optional(),
 });
 
 export const refineRegisterSchema = registerSchema.refine(

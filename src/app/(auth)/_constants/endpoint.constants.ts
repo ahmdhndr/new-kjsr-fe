@@ -3,4 +3,5 @@ export const ENDPOINT = {
   USER: "/users",
   CATEGORY: "/category",
   MEDIA: "/media",
+  PREAPPROVAL: "/preapproval",
 };

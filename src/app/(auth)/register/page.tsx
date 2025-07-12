@@ -6,8 +6,15 @@ import { RegisterForm } from "../_components/register-form";
 export const metadata: Metadata = {
   title: "Sign up to KJSR",
 };
+type Params = Promise<{ email: string; token: string }>;
 
-export default function RegisterPage() {
+export default async function RegisterPage({
+  searchParams,
+}: {
+  searchParams: Params;
+}) {
+  const { email, token } = await searchParams;
+
   return (
     <div className="h-full w-full overflow-hidden">
       <div className="flex w-full flex-col lg:flex-row">
@@ -34,7 +41,7 @@ export default function RegisterPage() {
           </div>
         </section>
         <section className="flex-1 p-10">
-          <RegisterForm />
+          <RegisterForm email={email} token={token} />
         </section>
       </div>
     </div>

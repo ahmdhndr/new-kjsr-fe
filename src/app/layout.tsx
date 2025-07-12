@@ -90,6 +90,7 @@ export default function RootLayout({
               closeButton: "!-right-5 !w-7 !h-7 justify-self-end",
             },
           }}
+          duration={10000}
         />
       </body>
     </html>

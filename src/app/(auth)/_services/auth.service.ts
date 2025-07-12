@@ -24,4 +24,6 @@ export const authServices = {
     password: string;
     confirmPassword: string;
   }) => instance.post(`${ENDPOINT.AUTH}/reset-password`, payload),
+  preApprovalRequest: (payload: { email: string }) =>
+    instance.post(`${ENDPOINT.PREAPPROVAL}/request`, payload),
 };
