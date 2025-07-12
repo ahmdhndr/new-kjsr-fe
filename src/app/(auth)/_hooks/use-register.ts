@@ -13,7 +13,7 @@ import { refineRegisterSchema } from "../_schemas/register.schema";
 import { authServices } from "../_services/auth.service";
 import { IRegister } from "../_types/auth";
 
-const useRegister = () => {
+const useRegister = (token?: string) => {
   const router = useRouter();
 
   const [visiblePassword, setVisiblePassword] = useState<{
@@ -44,7 +44,10 @@ const useRegister = () => {
   });
 
   const registerFn = async (payload: IRegister) => {
-    const result = await authServices.register(payload);
+    const result = await authServices.register({
+      token,
+      ...payload,
+    });
     return result;
   };
 

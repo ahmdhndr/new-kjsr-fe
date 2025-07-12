@@ -8,6 +8,7 @@ interface IRegister {
   email: string;
   password: string;
   confirmPassword: string;
+  token?: string;
 }
 
 interface IActivation {
