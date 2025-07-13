@@ -24,7 +24,7 @@ export function RegisterForm({
   token,
 }: {
   email?: string;
-  token?: string;
+  token: string;
 }) {
   const {
     visiblePassword,

@@ -23,8 +23,8 @@ export default function PlaceholderComponent({
               <h2 className="text-destructive my-0 text-xl font-semibold uppercase md:text-2xl">
                 {subHeading}
               </h2>
-              <div className="bg-destructive h-0.5 w-full" />
             </div>
+            <div className="bg-destructive h-0.5 w-full" />
             {children}
           </div>
         </div>

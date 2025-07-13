@@ -21,7 +21,9 @@ export default function SuccessPage() {
           height={100}
         />
       </div>
-      <h1 className="text-primary text-3xl font-semibold">Success</h1>
+      <h1 className="text-primary text-2xl font-semibold lg:text-3xl">
+        Success
+      </h1>
       <p className="w-full font-light text-balance">
         Congratulations! Your account have been{" "}
         <span>successfully verified.</span>
