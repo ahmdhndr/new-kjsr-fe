@@ -1,5 +1,10 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
 
 import { RegisterForm } from "../_components/register-form";
 
@@ -14,6 +19,11 @@ export default async function RegisterPage({
   searchParams: Params;
 }) {
   const { email, token } = await searchParams;
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) {
+    redirect("/");
+  }
 
   return (
     <div className="h-full w-full overflow-hidden">

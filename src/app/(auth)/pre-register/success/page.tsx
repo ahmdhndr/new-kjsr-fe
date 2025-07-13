@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowRight } from "lucide-react";
@@ -9,6 +10,14 @@ import { Button } from "@/components/ui/button";
 export default function SuccessPage() {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center space-y-5 px-4 text-center">
+      <div className="flex w-full justify-center">
+        <Image
+          src="/illustration/success-verify.svg"
+          alt="Success Verify Illustration"
+          width={150}
+          height={100}
+        />
+      </div>
       <h1 className="text-primary text-2xl font-semibold lg:text-3xl">
         Permintaan Pengajuan Akun Sukses
       </h1>
