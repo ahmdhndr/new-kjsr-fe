@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `Home ❤️ ${siteConfig.title}`,
-    template: `%s ❤️ ${siteConfig.title}`,
+    default: `Home | ${siteConfig.title}`,
+    template: `%s | ${siteConfig.title}`,
   },
   keywords: [
     "Yayasan Jantung Indonesia",

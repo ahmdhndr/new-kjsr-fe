@@ -15,6 +15,7 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 60 * 60, // 1 jam
+    updateAge: 60 * 60, // 1 jam
   },
   secret: env.NEXTAUTH_SECRET,
   providers: [
@@ -41,7 +42,7 @@ export const authOptions: AuthOptions = {
           const user = resultUser.data.data;
           if (!user) throw new AxiosError("Invalid credentials.");
 
-          // user.accessToken = accessToken;
+          user.accessToken = accessToken;
           return user;
         } catch (_error) {
           return null;
@@ -71,7 +72,7 @@ export const authOptions: AuthOptions = {
       session: SessionExtended;
     }) {
       session.user = token.user;
-      session.accessToken = token.user?.accessToken;
+      // session.accessToken = token.user?.accessToken;
       return session;
     },
   },

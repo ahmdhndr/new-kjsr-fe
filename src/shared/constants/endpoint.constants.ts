@@ -1,7 +1,7 @@
 export const ENDPOINT = {
   AUTH: "/auth",
   USER: "/users",
-  CATEGORY: "/category",
+  CATEGORY: "/categories",
   MEDIA: "/media",
   PREAPPROVAL: "/preapproval",
 };
