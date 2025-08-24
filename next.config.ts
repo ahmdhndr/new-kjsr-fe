@@ -5,6 +5,14 @@ import "./src/lib/env/server";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.kjsr.or.id",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

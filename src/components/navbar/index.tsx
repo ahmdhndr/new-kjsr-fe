@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 import { menus } from "@/data/menus";
@@ -12,6 +11,7 @@ import { UserProfile } from "@/types/user-profile";
 
 import BrandLogo from "../brand-logo";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 import NavbarMobile from "./navbar-mobile";
 import ProfileMenu from "./profile-menu";
 
@@ -51,15 +51,11 @@ export default function Navbar() {
             </div>
             <nav className="flex items-center gap-2">
               {status == "loading" ? (
-                <Loader2 className="size-5 animate-spin" />
+                <Skeleton className="h-9 w-20 bg-gray-300" />
               ) : session ? (
                 <ProfileMenu {...(session.user as UserProfile)} />
               ) : (
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  className="text-primary hover:bg-primary hover:text-background transition-colors"
-                >
+                <Button asChild className="text-white-kjsr">
                   <Link href="/login">Masuk</Link>
                 </Button>
               )}

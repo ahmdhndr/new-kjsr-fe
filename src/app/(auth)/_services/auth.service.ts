@@ -1,6 +1,6 @@
 import { instance } from "@/lib/axios/instance";
+import { ENDPOINT } from "@/shared/constants/endpoint.constants";
 
-import { ENDPOINT } from "../_constants/endpoint.constants";
 import { ILogin, IRegister } from "../_types/auth";
 
 type OtpUrlType = "resend-otp" | "forgot-password";
@@ -8,7 +8,11 @@ type OtpUrlType = "resend-otp" | "forgot-password";
 export const authServices = {
   register: (payload: IRegister) =>
     instance.post(`${ENDPOINT.AUTH}/register`, payload),
-  login: (payload: ILogin) => instance.post(`${ENDPOINT.AUTH}/login`, payload),
+  login: (payload: ILogin) => {
+    const result = instance.post(`${ENDPOINT.AUTH}/login`, payload);
+    console.log(result);
+    return result;
+  },
   getProfile: (token: string) =>
     instance.get(`${ENDPOINT.USER}/me`, {
       headers: {
