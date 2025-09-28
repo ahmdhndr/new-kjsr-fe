@@ -1,8 +1,10 @@
+import { Metadata } from "next";
 import Image from "next/image";
 
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { blurDataURL } from "@/lib/blur-data-image-url";
+import extractTextFromTiptap from "@/lib/extract-from-tiptap";
 import { Article } from "@/shared/interfaces/article.interface";
 import { articleServices } from "@/shared/services/article.service";
 
@@ -11,15 +13,60 @@ import CategoryDetailArticle from "../_components/category-detail-article";
 
 type Params = Promise<{ slug: string }>;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const { data: articleResult } = await articleServices.getDetailArticle(slug);
+
+  const article = articleResult.data;
+
+  const coverImage = /^https?:\/\//.test(article.coverUrl!)
+    ? article.coverUrl
+    : "/images/og.jpg";
+  const author = `${article.author.firstName} ${article.author.lastName}`;
+  const articleJson = article.content;
+  const description = extractTextFromTiptap(articleJson).slice(0, 200);
+
+  return {
+    title: article.title,
+    description,
+    authors: [{ name: author }],
+    openGraph: {
+      title: article.title,
+      description,
+      type: "article",
+      publishedTime: article.publishedAt,
+      authors: [author],
+      images: [
+        {
+          url: coverImage,
+          width: 1200,
+          height: 630,
+          alt: `Cover ${article.title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description,
+      images: [coverImage],
+    },
+  };
+}
+
 export default async function ArticleSlugPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const { data: article } = await articleServices.getDetailArticle(slug);
+  const { data: articleResult } = await articleServices.getDetailArticle(slug);
 
-  const articleData: Article = article.data;
-  const coverImage = /^https?:\/\//.test(articleData.coverUrl!)
-    ? articleData.coverUrl
+  const article: Article = articleResult.data;
+  const coverImage = /^https?:\/\//.test(article.coverUrl!)
+    ? article.coverUrl
     : "/images/og.jpg";
-  const author = `${articleData.author.firstName} ${articleData.author.lastName}`;
+  const author = `${article.author.firstName} ${article.author.lastName}`;
 
   return (
     <>
@@ -32,7 +79,7 @@ export default async function ArticleSlugPage({ params }: { params: Params }) {
             <Image
               fill
               src={coverImage!}
-              alt={`Cover ${articleData.title}`}
+              alt={`Cover ${article.title}`}
               className="object-cover"
               sizes="100%"
               placeholder="blur"
@@ -41,12 +88,10 @@ export default async function ArticleSlugPage({ params }: { params: Params }) {
           </div>
           <div className="flex flex-col gap-4">
             {/* Category */}
-            <CategoryDetailArticle categories={articleData.categories} />
+            <CategoryDetailArticle categories={article.categories} />
 
             {/* Title */}
-            <h1 className="text-xl font-bold lg:text-3xl">
-              {articleData.title}
-            </h1>
+            <h1 className="text-xl font-bold lg:text-3xl">{article.title}</h1>
 
             {/* TODO: clickable redirect to blog with the author */}
             {/* Author */}
@@ -54,14 +99,11 @@ export default async function ArticleSlugPage({ params }: { params: Params }) {
               <h4>{author}</h4>
               <span>|</span>
               <span>
-                {new Date(articleData.publishedAt!).toLocaleDateString(
-                  "en-ID",
-                  {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  }
-                )}
+                {new Date(article.publishedAt!).toLocaleDateString("en-ID", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
               </span>
             </div>
           </div>
@@ -69,7 +111,7 @@ export default async function ArticleSlugPage({ params }: { params: Params }) {
         {/* Content */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <ArticleContent content={articleData.content} />
+            <ArticleContent content={article.content} />
           </div>
           {/* <div className="bg-red-kjsr">Belum tau buat apa</div> */}
         </div>
