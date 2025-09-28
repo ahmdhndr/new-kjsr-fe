@@ -33,10 +33,13 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     className={cn(
-                      "text-primary/90 hover:text-primary font-medium transition-colors",
-                      item.href === pathname
-                        ? "text-primary font-semibold"
-                        : "text-primary/80"
+                      // base style
+                      "text-primary/80 hover:text-primary relative transition-colors",
+                      // underline effect
+                      "after:bg-red-kjsr after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:transform-gpu after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100",
+                      // active state
+                      item.href === pathname &&
+                        "text-primary font-semibold after:scale-x-100"
                     )}
                   >
                     {item.name}

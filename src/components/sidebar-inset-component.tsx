@@ -1,14 +1,18 @@
 import React from "react";
 
+import { IconType } from "react-icons/lib";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 
 const SidebarInsetComponent = ({
   header,
   children,
+  headerIcon: HeaderIcon,
 }: {
-  header: string;
+  header: React.ReactNode;
   children: React.ReactNode;
+  headerIcon?: IconType | null;
 }) => {
   return (
     <SidebarInset className="flex min-h-screen">
@@ -19,7 +23,8 @@ const SidebarInsetComponent = ({
             orientation="vertical"
             className="mr-2 data-[orientation=vertical]:h-4"
           />
-          {header}
+          <span>{header}</span>
+          {HeaderIcon && <HeaderIcon />}
         </div>
       </header>
       {/* CONTENT */}

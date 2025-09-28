@@ -10,12 +10,12 @@ import {
 } from "@/app/(auth)/_types/auth";
 
 import { env } from "./env/server";
+import TokenManager from "./token-manager";
 
 export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 60 * 60, // 1 jam
-    updateAge: 60 * 60, // 1 jam
   },
   secret: env.NEXTAUTH_SECRET,
   providers: [
@@ -65,15 +65,42 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({
-      token,
       session,
+      token,
     }: {
-      token: JWTExtended;
       session: SessionExtended;
+      token: JWTExtended;
     }) {
+      let isExpired = false;
+      if (token.user?.accessToken) {
+        // decode token BE untuk ambil exp
+        const decoded: { exp: number } = JSON.parse(
+          Buffer.from(token.user.accessToken.split(".")[1], "base64").toString()
+        );
+
+        if (Date.now() >= decoded.exp * 1000) {
+          isExpired = true;
+        }
+      }
+
+      if (isExpired) {
+        session.user = undefined;
+        session.accessToken = undefined;
+        TokenManager.setToken("");
+        return session;
+      }
+
       session.user = token.user;
-      // session.accessToken = token.user?.accessToken;
+      session.accessToken = token.user?.accessToken;
       return session;
+    },
+  },
+  events: {
+    async signOut() {
+      // import("@/lib/token-manager").then(({ TokenManager }) => {
+      //   TokenManager.setToken("");
+      // })
+      TokenManager.setToken("");
     },
   },
 };

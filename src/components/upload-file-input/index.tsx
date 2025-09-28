@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, Loader2Icon } from "lucide-react";
 import { IoMdCloudUpload } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
@@ -27,6 +27,7 @@ interface UploadFileInputProps {
   isDropable?: boolean;
   onUpload?: (files?: FileList) => void;
   onDelete?: () => Promise<void>;
+  expandPreview?: boolean;
   isUploading?: boolean;
   isDeleting?: boolean;
   acceptedFileType?: "pdf" | "image";
@@ -39,6 +40,7 @@ export default function UploadFileInput({
   isDropable = false,
   isUploading = false,
   isDeleting = false,
+  expandPreview = false,
   onUpload,
   onDelete,
   acceptedFileType = "image",
@@ -51,6 +53,7 @@ export default function UploadFileInput({
   const dropzoneId = useId();
   const [acceptedFiles, setAcceptedFiles] = useState<string>("");
   const [textAcceptedFile, setTextAcceptedFile] = useState<string>("");
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     if (uploadedFile) {
@@ -131,91 +134,144 @@ export default function UploadFileInput({
 
   return (
     <section className="w-full space-y-2">
-      <label
-        ref={drop}
-        htmlFor={`upload-file-${dropzoneId}`}
-        className={cn(
-          "border-primary flex min-h-24 w-full flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 p-1 hover:bg-gray-100",
-          previewUrl ? "pointer-events-none" : "cursor-pointer",
-          className
-        )}
-      >
-        <Input
-          type="file"
-          className="hidden"
-          disabled={Boolean(previewUrl)}
-          onChange={handleOnUpload}
-          accept={acceptedFiles}
-          name={name}
-          id={`upload-file-${dropzoneId}`}
-        />
-        <div className="flex flex-col items-center justify-center gap-2">
-          <IoMdCloudUpload className="text-primary h-10 w-10" />
-          <div className="flex flex-col items-center justify-center gap-1 text-sm text-gray-500">
-            {isDropable ? (
-              <span>Drag and Drop or Click to upload a file</span>
-            ) : (
-              <span>Click to upload a file</span>
-            )}
-            <span className="text-xs">
-              Accepted file types: {textAcceptedFile}
-            </span>
+      {!previewUrl && (
+        <label
+          ref={drop}
+          htmlFor={`upload-file-${dropzoneId}`}
+          className={cn(
+            "border-primary hover:bg-primary/10 flex min-h-24 w-full flex-col items-center justify-center rounded-lg border-2 border-dashed bg-transparent p-1",
+            previewUrl ? "pointer-events-none" : "cursor-pointer",
+            className
+          )}
+        >
+          <Input
+            type="file"
+            className="hidden"
+            disabled={Boolean(previewUrl)}
+            onChange={handleOnUpload}
+            accept={acceptedFiles}
+            name={name}
+            id={`upload-file-${dropzoneId}`}
+          />
+          <div className="flex flex-col items-center justify-center gap-2">
+            <IoMdCloudUpload className="text-primary h-10 w-10" />
+            <div className="flex flex-col items-center justify-center gap-1 text-sm text-gray-500">
+              {isDropable ? (
+                <span>Drag and Drop or Click to upload a file</span>
+              ) : (
+                <span>Click to upload a file</span>
+              )}
+              <span className="text-xs">
+                Accepted file types: {textAcceptedFile}
+              </span>
+            </div>
           </div>
+        </label>
+      )}
+      {previewUrl && !expandPreview && (
+        // <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+        <div
+          className={`relative overflow-hidden rounded-lg border transition-all duration-300 ${
+            expanded ? "max-h-full" : "max-h-[50px]"
+          }`}
+        >
+          <Image
+            src={previewUrl}
+            alt={previewName || "Preview Image"}
+            className="aspect-video object-cover"
+            width={1280}
+            height={720}
+            placeholder="blur"
+            blurDataURL={blurDataURL}
+          />
+          {isUploading ? (
+            <div className="bg-primary/40 text-white-kjsr absolute inset-0 flex items-center justify-center text-sm">
+              <div className="bg-primary text-white-kjsr absolute right-2.5 bottom-2.5 flex items-center rounded-lg p-1">
+                <Loader2Icon className="animate-spin" size={24} />{" "}
+              </div>
+            </div>
+          ) : (
+            <div className="absolute right-1.5 bottom-1.5 flex items-center space-x-2">
+              <Button
+                type="button"
+                // variant="outline"
+                size="sm"
+                onClick={() => setExpanded((prev) => !prev)}
+              >
+                {expanded ? "Perkecil Preview" : "Lihat Lebih Besar"}
+              </Button>
+              <Button
+                variant="outline-destructive"
+                onClick={handleDelete}
+                disabled={isDeleting || isUploading}
+              >
+                {isDeleting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <MdDelete />
+                )}
+              </Button>
+            </div>
+          )}
         </div>
-      </label>
-      <h3 className="text-sm">Preview</h3>
-      <div className="flex w-full flex-col items-start gap-1">
-        {previewUrl ? (
-          <div className="relative flex w-full items-center gap-2 rounded-lg border p-2">
-            <div className="relative h-10 w-10">
-              <Image
-                fill
-                src={previewUrl}
-                alt={previewName || "Preview Icon"}
-                className="object-contain"
-                sizes="40px"
-                placeholder="blur"
-                blurDataURL={blurDataURL}
-              />
-            </div>
-            <div className="flex flex-1 flex-col gap-1">
-              {isUploading ? (
-                <div className="flex items-center gap-1 text-gray-500">
-                  <span className="text-sm">Uploading Icon</span>
-                  <Loader2 className="h-5 w-5 animate-spin" />
+      )}
+      {expandPreview && (
+        <>
+          <h3 className="text-sm">Preview</h3>
+          <div className="flex w-full flex-col items-start gap-1">
+            {previewUrl ? (
+              <div className="relative flex w-full items-center gap-2 rounded-lg border p-2">
+                <div className="relative h-10 w-10">
+                  <Image
+                    fill
+                    src={previewUrl}
+                    alt={previewName || "Preview Image"}
+                    className="object-contain"
+                    sizes="40px"
+                    placeholder="blur"
+                    blurDataURL={blurDataURL}
+                  />
                 </div>
-              ) : (
-                previewName && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <span className="inline-block w-fit max-w-52 truncate text-sm">
-                        <span className="text-sm">{previewName}</span>
-                      </span>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-xs break-words">
-                      <span>{previewName}</span>
-                    </TooltipContent>
-                  </Tooltip>
-                )
-              )}
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleDelete}
-              disabled={isDeleting || isUploading}
-            >
-              {isDeleting ? (
-                <Loader2 className="h-8 w-8 animate-spin" />
-              ) : (
-                <MdDelete className="text-destructive h-8 w-8" />
-              )}
-            </Button>
+                <div className="flex flex-1 flex-col gap-1">
+                  {isUploading ? (
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <span className="text-sm">Uploading</span>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    </div>
+                  ) : (
+                    previewName && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="inline-block w-fit max-w-52 truncate text-sm">
+                            <span className="text-sm">{previewName}</span>
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs break-words">
+                          <span>{previewName}</span>
+                        </TooltipContent>
+                      </Tooltip>
+                    )
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleDelete}
+                  disabled={isDeleting || isUploading}
+                >
+                  {isDeleting ? (
+                    <Loader2 className="h-8 w-8 animate-spin" />
+                  ) : (
+                    <MdDelete className="text-destructive h-8 w-8" />
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <span className="text-sm text-gray-500">No file uploaded.</span>
+            )}
           </div>
-        ) : (
-          <span className="text-sm text-gray-500">No file uploaded.</span>
-        )}
-      </div>
+        </>
+      )}
     </section>
   );
 }

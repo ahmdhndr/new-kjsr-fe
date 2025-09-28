@@ -41,7 +41,7 @@ export function LoginForm() {
                     Username atau Email
                   </FormLabel>
                   <FormControl>
-                    <Input autoFocus type="text" {...field} />
+                    <Input tabIndex={1} autoFocus type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -59,6 +59,7 @@ export function LoginForm() {
                         asChild
                         variant={"link"}
                         className="h-auto p-0 underline"
+                        tabIndex={3}
                       >
                         <Link href={"/forgot-password"}>Lupa password?</Link>
                       </Button>
@@ -68,8 +69,10 @@ export function LoginForm() {
                     <Input
                       type={isVisible ? "text" : "password"}
                       placeholder="Password"
+                      tabIndex={2}
                       endContent={
                         <button
+                          tabIndex={4}
                           type="button"
                           onClick={() => toggleVisibilityPassword()}
                         >
@@ -84,6 +87,7 @@ export function LoginForm() {
               )}
             />
             <Button
+              tabIndex={5}
               type="submit"
               variant={"default"}
               className="w-full"
@@ -95,7 +99,7 @@ export function LoginForm() {
         </Form>
       </CardContent>
       <p className="text-muted-foreground text-center">
-        <Button variant={"link"} className="p-0">
+        <Button tabIndex={6} variant={"link"} className="p-0">
           <Link
             href={"/pre-register"}
             className="text-primary flex justify-center gap-1"

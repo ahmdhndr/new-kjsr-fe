@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 
 import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -74,23 +75,27 @@ export default function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
 
-  const defaultData = useMemo(() => [], []);
+  // const defaultData = useMemo(() => [], []);
 
   const table = useReactTable({
-    data: data || defaultData,
+    data,
     columns,
-    manualPagination: true, // kita handle sendiri pagination-nya
-    pageCount: totalPages, // penting! biar pagination bener
+    manualPagination: true,
+    pageCount: totalPages,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
       pagination: {
         pageIndex: 0,
         pageSize: parseInt(valueLimit),
@@ -98,26 +103,24 @@ export default function DataTable<TData, TValue>({
     },
   });
 
-  const topContent = useMemo(() => {
-    return (
-      <section className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
-        <div className="order-2 md:order-1">
-          <Input
-            type="text"
-            placeholder="Search by name"
-            startContent={<CiSearch />}
-            className="max-w-sm"
-            value={valueInput}
-            onChange={onChangeSearch}
-          />
-        </div>
-        <div className="order-1 flex items-center gap-1 md:order-2">
-          {buttonTopContent && buttonTopContent}
-          <DataTableViewOptions table={table} />
-        </div>
-      </section>
-    );
-  }, [table, buttonTopContent, valueInput, onChangeSearch]);
+  const topContent = (
+    <section className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
+      <div className="order-2 md:order-1">
+        <Input
+          type="text"
+          placeholder="Search..."
+          startContent={<CiSearch />}
+          className="max-w-sm"
+          value={valueInput}
+          onChange={onChangeSearch}
+        />
+      </div>
+      <div className="order-1 flex items-center gap-1 md:order-2">
+        {buttonTopContent && buttonTopContent}
+        <DataTableViewOptions table={table} />
+      </div>
+    </section>
+  );
 
   return (
     <div className="space-y-4">
@@ -153,7 +156,7 @@ export default function DataTable<TData, TValue>({
                 <TableRow key={`skeleton-${i}`}>
                   {columns.map((_col, idx) => (
                     <TableCell key={idx}>
-                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="min-h-10 w-full" />
                     </TableCell>
                   ))}
                 </TableRow>
@@ -177,7 +180,7 @@ export default function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center">
-                  No results.
+                  Data tidak ditemukan.
                 </TableCell>
               </TableRow>
             )}

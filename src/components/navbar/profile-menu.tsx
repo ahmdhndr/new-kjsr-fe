@@ -32,7 +32,7 @@ export default function ProfileMenu({
     return null;
   }
 
-  const avatarFallback = firstName.charAt(0).toUpperCase() || "T";
+  const avatarFallback = firstName?.charAt(0).toUpperCase() || "T";
   const fullName = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}`;
 
   return (

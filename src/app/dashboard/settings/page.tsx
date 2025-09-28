@@ -1,6 +1,6 @@
 import UnderConstructionPage from "@/components/under-construction-page";
 
-import SidebarInsetComponent from "../_components/sidebar-inset-component";
+import SidebarInsetComponent from "../@/components/sidebar-inset-component";
 
 export default function SettingsPage() {
   return (

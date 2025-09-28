@@ -2,10 +2,10 @@ import { redirect } from "next/navigation";
 
 import { getServerSession } from "next-auth";
 
+import SidebarInsetComponent from "@/components/sidebar-inset-component";
 import { authOptions } from "@/lib/auth";
 import { UserProfile } from "@/types/user-profile";
 
-import SidebarInsetComponent from "../../_components/sidebar-inset-component";
 import CategoryTable from "./_components/category-table";
 
 export default async function CategoryPage() {

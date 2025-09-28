@@ -1,45 +1,54 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { generateText } from "@tiptap/react";
+
+import { extensions } from "@/components/tiptap-templates/simple/extensions";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { blurDataURL } from "@/lib/blur-data-image-url";
-
-import { ArticleDTO } from "../_dtos/article.dto";
+import { Article } from "@/shared/interfaces/article.interface";
 
 export default function ArticleItem({
   title,
   slug,
-  excerpt,
   author,
-  image_url,
+  content,
+  coverUrl,
   categories,
-  created_at,
-}: ArticleDTO) {
-  const imageUrl = image_url ? image_url : "/images/og.jpg";
+  publishedAt,
+}: Article) {
+  const text = generateText(content, extensions);
+  const coverImage = /^https?:\/\//.test(coverUrl!)
+    ? coverUrl!
+    : "/images/og.jpg";
+
+  const authorFull = `${author.firstName} ${author.lastName}`;
   return (
     <div className="text-primary space-y-2 overflow-hidden">
       <div>
         <Image
-          src={imageUrl}
+          src={coverImage}
           alt={title}
           width={1280}
           height={720}
           quality={90}
           placeholder="blur"
           blurDataURL={blurDataURL}
-          className="block aspect-video h-full object-cover object-center"
+          className="aspect-video h-auto w-full rounded-md object-cover object-center"
         />
       </div>
 
       <div className="flex items-center gap-1 text-sm">
-        <span>{author}</span>
+        <span>{authorFull}</span>
         <span>&#8226;</span>
         <span>
-          {created_at.toLocaleDateString("en-ID", {
+          {new Date(publishedAt!).toLocaleDateString("en-ID", {
             day: "2-digit",
             month: "short",
             year: "numeric",
@@ -56,12 +65,12 @@ export default function ArticleItem({
         <TooltipContent>{title}</TooltipContent>
       </Tooltip>
 
-      <p className="line-clamp-3 min-h-[72px] text-balance">{excerpt}</p>
+      <p className="line-clamp-3 min-h-[72px] text-balance">{text}</p>
 
       <div className="flex items-center gap-2 text-sm">
         {categories.map((category, i) => (
           <span key={i} className="bg-primary/5 rounded-full border px-2 py-1">
-            {category}
+            {category.name}
           </span>
         ))}
       </div>

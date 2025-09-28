@@ -49,14 +49,6 @@ export default function SaveCategoryModal({
   const { close } = useModal();
   const [dataEdit, setDataEdit] = useState<TCategory | null>();
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setDataEdit(data);
-  //   } else {
-  //     setDataEdit(null);
-  //   }
-  // }, [data]);
-
   useEffect(() => {
     if (action === "edit" && data) {
       setDataEdit(data);
@@ -127,6 +119,7 @@ export default function SaveCategoryModal({
                     <FormControl>
                       <UploadFileInput
                         isDropable
+                        expandPreview
                         fileExist={dataEdit?.iconUrl}
                         onUpload={(files) => {
                           if (files) {

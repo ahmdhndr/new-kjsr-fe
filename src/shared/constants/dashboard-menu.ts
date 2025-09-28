@@ -8,7 +8,7 @@ import { NavDashboard } from "../types/menu.type";
 export const navDashboard: NavDashboard = {
   general: [
     {
-      title: "Beranda",
+      title: "Dashboard",
       url: "/dashboard",
       icon: RiHome2Fill,
     },
@@ -42,6 +42,11 @@ export const navDashboard: NavDashboard = {
         {
           title: "Anggota",
           url: "/dashboard/admin/members",
+          icon: FaUserGroup,
+        },
+        {
+          title: "Review Artikel",
+          url: "/dashboard/admin/review-articles",
           icon: FaUserGroup,
         },
         {
