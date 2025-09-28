@@ -18,11 +18,10 @@ export default async function Home({
     search: search ?? "",
     category: category ?? "",
   });
-  const { data: articles } = await articleServices.listArticle(paginateQuery);
+  const { data: articleResult } =
+    await articleServices.listArticle(paginateQuery);
 
-  return (
-    <>
-      <HomeComponent articles={articles.data.list} />
-    </>
-  );
+  const { list: articles } = articleResult.data;
+
+  return <HomeComponent articles={articles} />;
 }
