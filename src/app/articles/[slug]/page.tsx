@@ -33,6 +33,11 @@ export async function generateMetadata({
   return {
     title: article.title,
     description,
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+    },
     authors: [{ name: author }],
     openGraph: {
       title: article.title,
