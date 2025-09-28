@@ -9,6 +9,7 @@ import { authOptions } from "@/lib/auth";
 import { env } from "@/lib/env/client";
 
 import { AppSidebar } from "./_components/app-sidebar";
+import DashboardLayoutClient from "./dashboard-layout-client";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -31,7 +32,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider className="text-primary">
       <AppSidebar />
-      {children}
+      <DashboardLayoutClient>{children}</DashboardLayoutClient>
     </SidebarProvider>
   );
 }

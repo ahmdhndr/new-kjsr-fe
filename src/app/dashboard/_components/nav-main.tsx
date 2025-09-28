@@ -25,7 +25,7 @@ import { Menu } from "@/shared/types/menu.type";
 
 export function NavMain({ items }: { items: Menu[] }) {
   const pathname = usePathname();
-  const { isMobile, setOpenMobile } = useSidebar();
+  const { isMobile, setOpenMobile, open } = useSidebar();
 
   return (
     <SidebarGroup className="text-primary">
@@ -34,7 +34,7 @@ export function NavMain({ items }: { items: Menu[] }) {
 
         return hasChildren ? (
           <div key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            {open && <SidebarGroupLabel>{item.title}</SidebarGroupLabel>}
             <SidebarMenu>
               {item.children!.map((child) => {
                 const hasSubChildren =

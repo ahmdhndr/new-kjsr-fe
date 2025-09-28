@@ -4,8 +4,8 @@ export const menus: { name: string; href: string }[] = [
     href: "/",
   },
   {
-    name: "About",
-    href: "/about",
+    name: "Articles",
+    href: "/articles",
   },
   {
     name: "Events",
@@ -16,7 +16,7 @@ export const menus: { name: string; href: string }[] = [
     href: "/programs",
   },
   {
-    name: "Articles",
-    href: "/articles",
+    name: "About",
+    href: "/about",
   },
 ];

@@ -107,7 +107,7 @@ const useCategory = () => {
     isRefetching: isRefetchingCategory,
     refetch: refetchCategory,
   } = useQuery({
-    queryKey: ["category", currentPage, currentLimit, currentSearch],
+    queryKey: ["categories", currentPage, currentLimit, currentSearch],
     queryFn: getCategories,
     placeholderData: keepPreviousData,
   });

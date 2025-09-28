@@ -6,6 +6,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_BASE_URL: z.string(),
     NEXT_PUBLIC_API_URL: z.string().url(),
+    NEXT_PUBLIC_MEDIA_URL: z.string().url(),
   }, // Specify env variables schema here. Usually start with `NEXT_PUBLIC` to expose to the client.
   /**
    * Makes it so that empty strings are treated as undefined.
@@ -15,5 +16,6 @@ export const env = createEnv({
   runtimeEnv: {
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_MEDIA_URL: process.env.NEXT_PUBLIC_MEDIA_URL,
   },
 });

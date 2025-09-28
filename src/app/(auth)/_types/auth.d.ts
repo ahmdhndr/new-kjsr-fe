@@ -26,6 +26,7 @@ interface SessionExtended extends Session {
 
 interface JWTExtended extends JWT {
   user?: UserExtended;
+  exp?: number;
 }
 
 interface ILogin {

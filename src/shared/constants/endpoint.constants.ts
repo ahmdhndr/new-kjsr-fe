@@ -4,4 +4,6 @@ export const ENDPOINT = {
   CATEGORY: "/categories",
   MEDIA: "/media",
   PREAPPROVAL: "/preapproval",
+  DASHBOARD_ARTICLE: "/dashboard/articles",
+  ARTICLE: "/articles",
 };

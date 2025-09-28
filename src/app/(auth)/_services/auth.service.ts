@@ -10,7 +10,6 @@ export const authServices = {
     instance.post(`${ENDPOINT.AUTH}/register`, payload),
   login: (payload: ILogin) => {
     const result = instance.post(`${ENDPOINT.AUTH}/login`, payload);
-    console.log(result);
     return result;
   },
   getProfile: (token: string) =>

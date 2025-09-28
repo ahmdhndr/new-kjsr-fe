@@ -26,7 +26,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   let menuItems: Menu[] = [];
 
   const berandaItem = navDashboard.general.find(
-    (item) => item.title === "Beranda"
+    (item) => item.title === "Dashboard"
   );
   const generalItems = navDashboard.general.find(
     (item) => item.title === "Umum"

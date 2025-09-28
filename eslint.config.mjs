@@ -21,7 +21,7 @@ const eslintConfig = [
       "prefer-arrow-callback": ["error"],
       "prefer-template": ["error"],
       semi: ["error"],
-      quotes: ["error", "double"],
+      quotes: ["error", "double", { avoidEscape: true }],
       "n/no-process-env": ["error"],
       "check-file/filename-naming-convention": [
         "error",
