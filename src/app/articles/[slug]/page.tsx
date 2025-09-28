@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import { siteConfig } from "@/config/site-config";
 import { blurDataURL } from "@/lib/blur-data-image-url";
 import extractTextFromTiptap from "@/lib/extract-from-tiptap";
 import { Article } from "@/shared/interfaces/article.interface";
@@ -33,13 +34,10 @@ export async function generateMetadata({
   return {
     title: article.title,
     description,
-    robots: {
-      index: true,
-      follow: true,
-      nocache: false,
-    },
+    robots: { index: true, follow: true },
     authors: [{ name: author }],
     openGraph: {
+      url: `${siteConfig.url}/articles/${article.slug}`,
       title: article.title,
       description,
       type: "article",
@@ -48,8 +46,8 @@ export async function generateMetadata({
       images: [
         {
           url: coverImage,
-          width: 1200,
-          height: 630,
+          width: 1280,
+          height: 720,
           alt: `Cover ${article.title}`,
         },
       ],
