@@ -4,29 +4,14 @@ import Image from "next/image";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { blurDataURL } from "@/lib/blur-data-image-url";
-import { Article, ContentNode } from "@/shared/interfaces/article.interface";
+import extractTextFromTiptap from "@/lib/extract-from-tiptap";
+import { Article } from "@/shared/interfaces/article.interface";
 import { articleServices } from "@/shared/services/article.service";
 
 import ArticleContent from "../_components/article-content";
 import CategoryDetailArticle from "../_components/category-detail-article";
 
 type Params = Promise<{ slug: string }>;
-
-function extractTextFromTiptap(node: ContentNode): string {
-  if (!node)
-    return "Klub Jantung Sehat Remaja (KJSR) Indonesia adalah salah satu program yang dijalankan di bawah naungan Yayasan Jantung Indonesia (YJI).";
-
-  if (node.type === "text" && typeof node.text === "string") {
-    return node.text;
-  }
-
-  // kalau node punya children
-  if (Array.isArray(node.content)) {
-    return node.content.map(extractTextFromTiptap).join(" ");
-  }
-
-  return "Klub Jantung Sehat Remaja (KJSR) Indonesia adalah salah satu program yang dijalankan di bawah naungan Yayasan Jantung Indonesia (YJI).";
-}
 
 export async function generateMetadata({
   params,
