@@ -3,7 +3,7 @@ import { articleServices } from "@/shared/services/article.service";
 import HomeComponent from "./home-component";
 
 export default async function Home() {
-  const { data: articles } = await articleServices.listArticle({});
+  const { data: articles } = await articleServices.listArticle("");
 
   return (
     <>
