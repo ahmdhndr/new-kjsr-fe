@@ -2,7 +2,6 @@ export interface QueryPaginationInterface {
   page?: number;
   limit?: number;
   search?: string;
-  category?: string;
 }
 
 export interface MetaPagination {
@@ -10,4 +9,8 @@ export interface MetaPagination {
   page: number;
   limit: number;
   totalPages: number;
+}
+
+export interface ArticlePaginationInterface extends QueryPaginationInterface {
+  category?: string;
 }

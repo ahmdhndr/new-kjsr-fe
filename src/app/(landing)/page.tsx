@@ -1,10 +1,10 @@
 import { buildURLParams } from "@/lib/build-params";
-import { QueryPaginationInterface } from "@/shared/interfaces/pagination.interface";
+import { ArticlePaginationInterface } from "@/shared/interfaces/pagination.interface";
 import { articleServices } from "@/shared/services/article.service";
 
 import HomeComponent from "./home-component";
 
-type SearchParams = Promise<QueryPaginationInterface>;
+type SearchParams = Promise<ArticlePaginationInterface>;
 
 export default async function Home({
   searchParams,
