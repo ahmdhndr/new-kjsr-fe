@@ -95,20 +95,6 @@ export default function ArticleDetail({ token, article }: ArticleDetailProps) {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="note"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Catatan</FormLabel>
-                    <FormControl>
-                      <Textarea onChange={field.onChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="action"
                 render={({ field }) => (
                   <FormItem>
@@ -128,6 +114,20 @@ export default function ArticleDetail({ token, article }: ArticleDetailProps) {
                         </SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="note"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Catatan</FormLabel>
+                    <FormControl>
+                      <Textarea onChange={field.onChange} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import SidebarInsetComponent from "@/components/sidebar-inset-component";
 import { authOptions } from "@/lib/auth";
 
-export default async function CategoryPage() {
+export default async function ArticlesPage() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
